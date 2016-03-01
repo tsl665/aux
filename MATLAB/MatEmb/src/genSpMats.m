@@ -23,6 +23,8 @@ if iscellstr({matType})
         fGenMat = @(n,m) sparse(rand(n,m));
     elseif strcmp(matType, 'eye')
         fGenMat = @(n,m) speye(n,m);
+    elseif strcmp(matType, 'ones')
+        fGenMat = @(n,m) ones(n,m);
     else
         error('Invalid special matrix type!');
     end
