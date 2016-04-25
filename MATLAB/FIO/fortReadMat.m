@@ -14,7 +14,7 @@ n = str2num(tline);
 
 A = zeros(m,n);
 
-if (matType == 'D')
+if (strcmp(matType, 'DN')||strcmp(matType, 'DT'))
 
     k = 0;
 
@@ -23,17 +23,20 @@ if (matType == 'D')
         p1 = 3;
         while p1 < length(tline)
             k = k + 1;
-%            j = mod(k-1, n)+1;
-%            i = floor((k-1)/n)+1;
-            i = mod(k-1, m)+1;
-            j = floor((k-1)/m)+1;
+            if strcmp(matType, 'DN')
+                i = mod(k-1, m)+1;
+                j = floor((k-1)/m)+1;
+            else
+                j = mod(k-1, n)+1;
+                i = floor((k-1)/n)+1;
+            end
             p2 = min(p1+lpn, length(tline));
             A(i,j) = str2double(tline(p1:p2));
             p1 = p1 + lnxt;
         end
     end
     
-elseif (matType == 'Z')
+elseif (strcmp(matType, 'ZN')||strcmp(matType, 'ZT'))
     
     k = 0;
 
@@ -47,10 +50,13 @@ elseif (matType == 'Z')
                 re = str2double(tline(p1:p2));
             else
                 k2 = k/2;
-%                j = mod(k2-1, n)+1;
-%                i = floor((k2-1)/n)+1;
-                i = mod(k2-1, m)+1;
-                j = floor((k2-1)/m)+1;
+                if strcmp(matType, 'ZN')
+                    i = mod(k2-1, m)+1;
+                    j = floor((k2-1)/m)+1;
+                else
+                    j = mod(k2-1, n)+1;
+                    i = floor((k2-1)/n)+1;
+                end
                 p2 = min(p1+lpn, length(tline));
                 im = str2double(tline(p1:p2));
                 A(i,j) = re + sqrt(-1)*im;
